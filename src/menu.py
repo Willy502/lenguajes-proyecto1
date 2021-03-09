@@ -1,3 +1,5 @@
+from .options import *
+
 class Menu:
 
     def __init__(self):
@@ -27,9 +29,9 @@ class Menu:
                 ##self.create_menu()
 
         if option == "1":
-            print("option 1")
+            open_file = Options().open_file(self, "MENU")
         elif option == "2":
-            print("option 2")
+            open_file = Options().open_file(self, "ORDEN")
         elif option == "3":
             print("option 3")
         elif option == "4":
