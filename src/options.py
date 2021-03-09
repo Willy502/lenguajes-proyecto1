@@ -11,11 +11,11 @@ class Options:
         file = fd.askopenfilename(title='Open files', filetypes=[('text files', '*.lfp')])
 
         if file != "":
-            if f_type == "MENU": 
+            if f_type == "menu": 
                 ProyectoSingleton().menu_file = file
             else:
                 ProyectoSingleton().orden_file = file
-            print("Archivo cargado exitosamente\n")
+            print("Archivo de " + f_type + " cargado exitosamente\n")
 
         else:
             print("No se ha seleccionado ningun archivo\n")

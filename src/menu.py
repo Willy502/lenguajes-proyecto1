@@ -29,9 +29,9 @@ class Menu:
                 ##self.create_menu()
 
         if option == "1":
-            open_file = Options().open_file(self, "MENU")
+            open_file = Options().open_file(self, "menu")
         elif option == "2":
-            open_file = Options().open_file(self, "ORDEN")
+            open_file = Options().open_file(self, "orden")
         elif option == "3":
             print("option 3")
         elif option == "4":
