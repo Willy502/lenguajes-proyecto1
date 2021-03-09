@@ -1,4 +1,5 @@
 from .options import *
+from .proyecto_singleton import *
 
 class Menu:
 
@@ -23,10 +24,14 @@ class Menu:
         self.select_menu_option(answer)
 
     def select_menu_option(self, option):
-        ##if option in ["3", "4", "5"]:
-            ##if PracticaSingleton().file is None:
-                ##print("Para acceder a estas opciones primero debes cargar un archivo\n")
-                ##self.create_menu()
+        if option in ["3", "5"]:
+            if ProyectoSingleton().menu_file is None:
+                print("Para acceder a estas opciones primero debes cargar un archivo de menu\n")
+                self.create_menu()
+
+        if option == "4" and ProyectoSingleton().orden_file is None:
+            print("Para acceder a estas opciones primero debes cargar un archivo de orden\n")
+            self.create_menu()
 
         if option == "1":
             open_file = Options().open_file(self, "menu")
