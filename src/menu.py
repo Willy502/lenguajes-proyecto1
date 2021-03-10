@@ -38,7 +38,7 @@ class Menu:
         elif option == "2":
             open_file = Options().open_file(self, "orden")
         elif option == "3":
-            print("option 3")
+            Options().read_menu()
         elif option == "4":
             print("option 4")
         elif option == "5":

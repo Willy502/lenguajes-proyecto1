@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog as fd
 from .menu import *
 from .proyecto_singleton import *
+from src.automatas.menu_automata import *
 
 class Options:
 
@@ -20,3 +21,7 @@ class Options:
         else:
             print("No se ha seleccionado ningun archivo\n")
         mn.create_menu()
+
+    def read_menu(self):
+        menu_file = ProyectoSingleton().menu_file
+        MenuAutomata().read_file(menu_file)
