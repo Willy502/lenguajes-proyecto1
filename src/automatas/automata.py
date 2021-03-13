@@ -67,6 +67,8 @@ class Automata:
 
                     else:
                         ## estado de error
+                        temp = data[i]
+                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         state = 0
                         column += 1
                         i += 1
@@ -84,6 +86,7 @@ class Automata:
                     
                     elif ord(data[i]) == 10:
                         ## ESTADO DE ERROR POR SALTO DE LÍNEA
+                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         state = 0
                         column = 0
                         line += 1
@@ -122,7 +125,8 @@ class Automata:
 
                     elif ord(data[i]) not in charcodes_continue:
                         ## ESTADO DE ERROR
-                        print(temp + ": " + str(ord(data[i])))
+                        temp += data[i]
+                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         state = 0
                         column += 1
                         column_tk = column
@@ -151,6 +155,8 @@ class Automata:
 
                     elif ord(data[i]) not in charcodes_continue:
                         ## ESTADO DE ERROR
+                        temp += data[i]
+                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         state = 0
                         column += 1
                         column_tk = column
@@ -173,6 +179,8 @@ class Automata:
 
                     else:
                         ## ESTADO DE ERROR
+                        temp += data[i]
+                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         state = 0
                         column += 1
                         column_tk = column
@@ -188,6 +196,8 @@ class Automata:
 
                     elif ord(data[i]) not in charcodes_continue:
                         ## ESTADO DE ERROR
+                        temp += data[i]
+                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         state = 0
                         column += 1
                         column_tk = column
