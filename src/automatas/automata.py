@@ -8,6 +8,8 @@ class Automata:
         charcodes_main = [91, 93, 58, 59, 61, 44, 37]
         charcodes_continue = [39, 91, 93, 58, 59, 61, 44, 37, 10, 32]
         accepted_items = []
+        error_items = []
+        errors = False
 
         with open(file_to_read, 'r') as file:
             data = file.read()
@@ -71,8 +73,10 @@ class Automata:
 
                     else:
                         ## estado de error
+                        errors = True
                         temp = data[i]
                         print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        error_items.append(AnalisisItem(temp, line, column_tk, "Caracter Desconocido"))
                         state = 0
                         column += 1
                         i += 1
@@ -91,7 +95,9 @@ class Automata:
                     
                     elif ord(data[i]) == 10:
                         ## ESTADO DE ERROR POR SALTO DE LÍNEA
+                        errors = True
                         print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        error_items.append(AnalisisItem(temp, line, column_tk, "Cadena no válida"))
                         state = 0
                         column = 0
                         line += 1
@@ -130,8 +136,10 @@ class Automata:
 
                     elif ord(data[i]) not in charcodes_continue:
                         ## ESTADO DE ERROR
+                        errors = True
                         temp += data[i]
                         print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        error_items.append(AnalisisItem(temp, line, column_tk, "Identificador no válido"))
                         state = 0
                         column += 1
                         column_tk = column
@@ -161,8 +169,10 @@ class Automata:
 
                     elif ord(data[i]) not in charcodes_continue:
                         ## ESTADO DE ERROR
+                        errors = True
                         temp += data[i]
                         print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
                         state = 0
                         column += 1
                         column_tk = column
@@ -186,8 +196,10 @@ class Automata:
 
                     else:
                         ## ESTADO DE ERROR
+                        errors = True
                         temp += data[i]
                         print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
                         state = 0
                         column += 1
                         column_tk = column
@@ -203,8 +215,10 @@ class Automata:
 
                     elif ord(data[i]) not in charcodes_continue:
                         ## ESTADO DE ERROR
+                        errors = True
                         temp += data[i]
                         print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
                         state = 0
                         column += 1
                         column_tk = column
@@ -215,15 +229,10 @@ class Automata:
                         state = 0
                         print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
-
-                else:
-                    ## ESTADO DE ERROR
-                    state = 0
-                    column += 1
-                    column_tk = column - 1
-                    i += 1
             
             Helper().reporte_analisis_correcto(accepted_items)
+            if errors:
+                Helper().reporte_errores(error_items)
 
     def create_token(self, data):
 
