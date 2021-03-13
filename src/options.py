@@ -20,8 +20,11 @@ class Options:
 
         else:
             print("No se ha seleccionado ningun archivo\n")
-        mn.create_menu()
 
     def read_menu(self):
         menu_file = ProyectoSingleton().menu_file
         Automata().read_file(menu_file)
+
+    def read_orden(self):
+        orden_file = ProyectoSingleton().orden_file
+        Automata().read_file(orden_file)

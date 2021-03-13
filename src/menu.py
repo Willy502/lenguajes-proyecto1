@@ -36,11 +36,14 @@ class Menu:
         if option == "1":
             open_file = Options().open_file(self, "menu")
         elif option == "2":
-            open_file = Options().open_file(self, "orden")
+            if ProyectoSingleton().menu_file is None:
+                print("Para acceder a esta opcion primero debes cargar un archivo de menu\n")
+            else:
+                open_file = Options().open_file(self, "orden")
         elif option == "3":
             Options().read_menu()
         elif option == "4":
-            print("option 4")
+            Options().read_orden()
         elif option == "5":
             print("option 5")
         elif option == "6":
