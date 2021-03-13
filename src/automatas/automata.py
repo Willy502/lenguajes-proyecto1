@@ -5,6 +5,7 @@ class Automata:
 
     def read_file(self, file_to_read):
 
+        palabras_reservadas = ['restaurante']
         charcodes_main = [91, 93, 58, 59, 61, 44, 37]
         charcodes_continue = [39, 91, 93, 58, 59, 61, 44, 37, 10, 32]
         accepted_items = []
@@ -24,12 +25,12 @@ class Automata:
             while i < len(data):
 
                 if state == 0:
-                    ## Caracteres individuales aceptados por el lenguaje
-                    ## Lectura plana hasta encontrar otros estados
+                    ## CARACTERES INDIVIDUALES ACEPTADOS POR EL LENGUAJE
+                    ## LECTURA PLANA HASTA ENCONTRAR OTROS ESTADOS
 
                     if ord(data[i]) == 10:
-                        line += 1 ## Nueva línea
-                        column = 0 ## Reiniciamos la columna
+                        line += 1 ## NUEVA LÍNEA
+                        column = 0 ## REINICIAMOS LA COLUMNA
                         column_tk = 0
                         i += 1
 
@@ -42,7 +43,7 @@ class Automata:
                         i += 1
 
                     elif ord(data[i]) == 32:
-                        ## whitespace
+                        ## WHITESPACE
                         column += 1
                         column_tk = column - 1
                         i += 1
@@ -56,7 +57,7 @@ class Automata:
                         i += 1
 
                     elif (ord(data[i]) >= 97 and ord(data[i]) <= 122) or ord(data[i]) == 241:
-                        ## a-z ñ included
+                        ## a-z ñ INCLUÍDO
                         column += 1
                         column_tk = column - 1
                         state = 3
@@ -72,7 +73,7 @@ class Automata:
                         i += 1
 
                     else:
-                        ## estado de error
+                        ## ESTADO DE ERROR
                         errors = True
                         temp = data[i]
                         print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
@@ -123,7 +124,7 @@ class Automata:
                         i += 1
 
                     elif (ord(data[i]) >= 97 and ord(data[i]) <= 122) or ord(data[i]) == 241:
-                        ## a-z ñ included
+                        ## a-z ñ INCLUÍDO
                         column += 1
                         temp += data[i]
                         i += 1
@@ -149,7 +150,10 @@ class Automata:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
                         print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
-                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_id"))
+                        if temp in palabras_reservadas:
+                            accepted_items.append(AnalisisItem(temp, line, column_tk, "Palabra Reservada"))
+                        else:
+                            accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_id"))
 
                 elif state == 4:
                     ## DIGITO
@@ -194,7 +198,7 @@ class Automata:
                         temp += data[i]
                         i += 1
 
-                    else:
+                    elif ord(data[i]) not in charcodes_continue:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
@@ -204,6 +208,12 @@ class Automata:
                         column += 1
                         column_tk = column
                         i += 1
+
+                    else:
+                        ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
+                        state = 0
+                        print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
 
                 elif state == 6:
 
@@ -236,8 +246,6 @@ class Automata:
 
     def create_token(self, data):
 
-        palabras_reservadas = ['restaurante']
-
         token_name = ""
         
         if ord(data) == 91:
@@ -254,8 +262,6 @@ class Automata:
             token_name = "tk_coma"
         elif ord(data) == 37:
             token_name = "tk_porc"
-        elif ord(data) in palabras_reservadas:
-            token_name = "Palabra reservada"
 
 
         return token_name
