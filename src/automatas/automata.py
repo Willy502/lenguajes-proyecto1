@@ -1,10 +1,13 @@
+from src.models.analisis_item import *
+from commons.helper import *
+
 class Automata:
 
     def read_file(self, file_to_read):
 
-        charcodes = [39, 91, 93, 58, 59, 61, 44, 37, 46, 95]
         charcodes_main = [91, 93, 58, 59, 61, 44, 37]
         charcodes_continue = [39, 91, 93, 58, 59, 61, 44, 37, 10, 32]
+        accepted_items = []
 
         with open(file_to_read, 'r') as file:
             data = file.read()
@@ -33,6 +36,7 @@ class Automata:
                         column_tk = column - 1
                         temp = data[i]
                         print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        accepted_items.append(AnalisisItem(temp, line, column_tk, self.create_token(data[i])))
                         i += 1
 
                     elif ord(data[i]) == 32:
@@ -82,6 +86,7 @@ class Automata:
                         state = 2
                         temp += data[i]
                         print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_string"))
                         i += 1
                     
                     elif ord(data[i]) == 10:
@@ -136,6 +141,7 @@ class Automata:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
                         print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_id"))
 
                 elif state == 4:
                     ## DIGITO
@@ -166,6 +172,7 @@ class Automata:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
                         print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
 
                 elif state == 5:
                     ## .
@@ -207,6 +214,7 @@ class Automata:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
                         print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
+                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
 
                 else:
                     ## ESTADO DE ERROR
@@ -214,3 +222,32 @@ class Automata:
                     column += 1
                     column_tk = column - 1
                     i += 1
+            
+            Helper().reporte_analisis_correcto(accepted_items)
+
+    def create_token(self, data):
+
+        palabras_reservadas = ['restaurante']
+
+        token_name = ""
+        
+        if ord(data) == 91:
+            token_name = "tk_corA"
+        elif ord(data) == 93:
+            token_name = "tk_corC"
+        elif ord(data) == 58:
+            token_name = "tk_dp"
+        elif ord(data) == 59:
+            token_name = "tk_pc"
+        elif ord(data) == 61:
+            token_name = "tk_asign"
+        elif ord(data) == 44:
+            token_name = "tk_coma"
+        elif ord(data) == 37:
+            token_name = "tk_porc"
+        elif ord(data) in palabras_reservadas:
+            token_name = "Palabra reservada"
+
+
+        return token_name
+
