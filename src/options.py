@@ -21,10 +21,10 @@ class Options:
         else:
             print("No se ha seleccionado ningun archivo\n")
 
-    def read_menu(self):
+    def read_menu(self, maxim):
         menu_file = ProyectoSingleton().menu_file
-        Automata().read_file(menu_file, "menu")
+        Automata().read_file(menu_file, "menu", maxim)
 
     def read_orden(self):
         orden_file = ProyectoSingleton().orden_file
-        Automata().read_file(orden_file, "orden")
+        Automata().read_file(orden_file, "orden", -1)

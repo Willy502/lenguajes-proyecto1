@@ -5,7 +5,7 @@ from commons.helper_orden import *
 
 class Automata:
 
-    def read_file(self, file_to_read, type_file):
+    def read_file(self, file_to_read, type_file, maxim):
 
         palabras_reservadas = ['restaurante']
         charcodes_main = [91, 93, 58, 59, 61, 44, 37]
@@ -248,7 +248,7 @@ class Automata:
                 HelperReport().reporte_errores(error_items)
             else:
                 if type_file == "menu":
-                    HelperMenu().analize_items(accepted_items)
+                    HelperMenu().analize_items(accepted_items, maxim)
                 else:
                     HelperOrden().analize_items(accepted_items)
 

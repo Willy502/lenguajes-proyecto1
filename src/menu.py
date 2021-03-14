@@ -42,7 +42,7 @@ class Menu:
             else:
                 open_file = Options().open_file(self, "orden")
         elif option == "3":
-            Options().read_menu()
+            self.menu_options()
         elif option == "4":
             Options().read_orden()
         elif option == "5":
@@ -52,3 +52,20 @@ class Menu:
         else:
             print("Selecciona una opción válida\n")
         self.create_menu()
+
+    def menu_options(self):
+        print("Desea poner límite en los precios? Si/No")
+        print("> ", end='')
+        answer = input()
+        if answer.upper() == "SI":
+            print("Valor máximo?")
+            print("> ", end='')
+            answer2 = input()
+            if answer2.isnumeric():
+                Options().read_menu(answer2)
+            else:
+                self.menu_options()
+        elif answer.upper() == "NO":
+            Options().read_menu(-1)
+        else:
+            self.menu_options()

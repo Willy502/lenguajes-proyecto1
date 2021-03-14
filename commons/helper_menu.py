@@ -8,12 +8,12 @@ from decimal import Decimal
 
 class HelperMenu:
 
-    def analize_items(self, items):
+    def analize_items(self, items, maxim):
         menu = Menu()
         menu.set_name(self.get_menu_name(items))
         menu.set_item(self.get_menu_options(items))
         ProyectoSingleton().menu = menu
-        self.build_html(menu)
+        self.build_html(menu, maxim)
 
     def get_menu_name(self, items):
         i = 0
@@ -69,7 +69,7 @@ class HelperMenu:
             i += 1
         return items_dict
 
-    def build_html(self, data):
+    def build_html(self, data, maxim):
         generated = False
 
         m_name = data.get_name()
@@ -80,10 +80,16 @@ class HelperMenu:
             <div class="container">
             <h2>''' + key.strip("'") + '''</h2>'''
             for value in values:
-                item += '''<div class="container">
-                            <h4 class="ml-5">''' + value.get_name().strip("'") + ''' - Q''' + str(round(Decimal(value.get_price()), 2)) + '''</h4>
-                            <p class="ml-5">''' + value.get_description().strip("'") + '''</p>
-                        </div>'''
+                if maxim == -1:
+                    item += '''<div class="container">
+                                <h4 class="ml-5">''' + value.get_name().strip("'") + ''' - Q''' + str(round(Decimal(value.get_price()), 2)) + '''</h4>
+                                <p class="ml-5">''' + value.get_description().strip("'") + '''</p>
+                            </div>'''
+                elif round(Decimal(value.get_price()), 2) <= Decimal(maxim):
+                    item += '''<div class="container">
+                                <h4 class="ml-5">''' + value.get_name().strip("'") + ''' - Q''' + str(round(Decimal(value.get_price()), 2)) + '''</h4>
+                                <p class="ml-5">''' + value.get_description().strip("'") + '''</p>
+                            </div>'''
             item += '''</div>'''
 
         html = '''<!doctype html>
