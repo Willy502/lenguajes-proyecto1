@@ -3,6 +3,7 @@ import os
 from src.models.menu import *
 from src.models.menu_item import *
 from src.models.analisis_item import *
+from src.proyecto_singleton import *
 from decimal import Decimal
 
 class HelperMenu:
@@ -11,6 +12,7 @@ class HelperMenu:
         menu = Menu()
         menu.set_name(self.get_menu_name(items))
         menu.set_item(self.get_menu_options(items))
+        ProyectoSingleton().menu = menu
         self.build_html(menu)
 
     def get_menu_name(self, items):
@@ -93,7 +95,7 @@ class HelperMenu:
                 <title>Menu</title>
                 <style>
                     .bg-c {
-                        background-color: #AA6639;
+                        background-color: #fff;
                     }
                     body {
                         background-color: #303E73;

@@ -24,8 +24,8 @@ class Orden:
     def get_tip(self):
         return self.__tip
 
-    def set_item(self, item):
-        self.__items.append(item)
+    def set_item(self, items):
+        self.__items = items
 
     def get_items(self):
         return self.__items

@@ -1,6 +1,7 @@
 from src.models.analisis_item import *
 from commons.helper_report import *
 from commons.helper_menu import *
+from commons.helper_orden import *
 
 class Automata:
 
@@ -249,7 +250,7 @@ class Automata:
                 if type_file == "menu":
                     HelperMenu().analize_items(accepted_items)
                 else:
-                    print(type_file)
+                    HelperOrden().analize_items(accepted_items)
 
     def create_token(self, data):
 
