@@ -19,8 +19,8 @@ class Automata:
             
             state = 0
             line = 1
-            column = 0
-            column_tk = 0
+            column = 1
+            column_tk = 1
             temp = ""
             i = 0
 
@@ -32,8 +32,8 @@ class Automata:
 
                     if ord(data[i]) == 10:
                         line += 1 ## NUEVA LÍNEA
-                        column = 0 ## REINICIAMOS LA COLUMNA
-                        column_tk = 0
+                        column = 1 ## REINICIAMOS LA COLUMNA
+                        column_tk = 1
                         i += 1
 
                     elif ord(data[i]) in charcodes_main:
@@ -102,7 +102,7 @@ class Automata:
                         print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         error_items.append(AnalisisItem(temp, line, column_tk, "Cadena no válida"))
                         state = 0
-                        column = 0
+                        column = 1
                         line += 1
                         i += 1
 

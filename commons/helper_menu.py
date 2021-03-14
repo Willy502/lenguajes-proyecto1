@@ -62,6 +62,7 @@ class HelperMenu:
                                                         items_dict[item_name].append(m_item)
             except Exception as e:
                 i += 1
+                continue
 
             i += 1
         return items_dict
