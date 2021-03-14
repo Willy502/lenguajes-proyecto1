@@ -15,43 +15,53 @@ class HelperMenu:
 
     def get_menu_name(self, items):
         i = 0
+        menu_name = ""
         while i < len(items):
             item = items[i]
-            if item.get_lexema() == "restaurante":
-                if items[i + 1].get_token() == "tk_asign":
-                    if items[i + 2].get_token() == "tk_string":
-                        return items[i + 2].get_lexema()
-                        break
+            
+            try:
+                if item.get_lexema() == "restaurante":
+                    if items[i + 1].get_token() == "tk_asign":
+                        if items[i + 2].get_token() == "tk_string":
+                            menu_name = items[i + 2].get_lexema()
+                            
+            except Exception as e:
+                if menu_name != "":
+                    break
             i += 1
 
-        return ""
+        return menu_name
 
     def get_menu_options(self, items):
         i = 0
         items_dict = {}
         item_name = ""
         while i < len(items):
-
-            if items[i].get_token() == "tk_dp":
-                if items[i - 1].get_token() == "tk_string":
-                    item_name = items[i - 1].get_lexema()
-                    items_dict[item_name] = []
             
-            elif items[i].get_token() == "tk_corC":
-                if items[i - 1].get_token() == "tk_string":
-                    if items[i - 2].get_token() == "tk_pc":
-                        if items[i - 3].get_token() == "tk_num":
-                            if items[i - 4].get_token() == "tk_pc":
-                                if items[i - 5].get_token() == "tk_string":
-                                    if items[i - 6].get_token() == "tk_pc":
-                                        if items[i - 7].get_token() == "tk_id":
-                                            if items[i - 8].get_token() == "tk_corA":
-                                                m_item = MenuItem()
-                                                m_item.set_item_id(items[i-7].get_lexema())
-                                                m_item.set_name(items[i-5].get_lexema())
-                                                m_item.set_price(items[i-3].get_lexema())
-                                                m_item.set_description(items[i-1].get_lexema())
-                                                items_dict[item_name].append(m_item)
+            try:
+                if items[i].get_token() == "tk_dp":
+                    if items[i - 1].get_token() == "tk_string":
+                        item_name = items[i - 1].get_lexema()
+                        items_dict[item_name] = []
+            
+                elif items[i].get_token() == "tk_corC":
+                    if items[i - 1].get_token() == "tk_string":
+                        if items[i - 2].get_token() == "tk_pc":
+                            if items[i - 3].get_token() == "tk_num":
+                                if items[i - 4].get_token() == "tk_pc":
+                                    if items[i - 5].get_token() == "tk_string":
+                                        if items[i - 6].get_token() == "tk_pc":
+                                            if items[i - 7].get_token() == "tk_id":
+                                                if items[i - 8].get_token() == "tk_corA":
+                                                    if item_name != "":
+                                                        m_item = MenuItem()
+                                                        m_item.set_item_id(items[i-7].get_lexema())
+                                                        m_item.set_name(items[i-5].get_lexema())
+                                                        m_item.set_price(items[i-3].get_lexema())
+                                                        m_item.set_description(items[i-1].get_lexema())
+                                                        items_dict[item_name].append(m_item)
+            except Exception as e:
+                i += 1
 
             i += 1
         return items_dict
