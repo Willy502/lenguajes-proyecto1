@@ -41,7 +41,6 @@ class Automata:
                         column += 1
                         column_tk = column - 1
                         temp = data[i]
-                        print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         accepted_items.append(AnalisisItem(temp, line, column_tk, self.create_token(data[i])))
                         i += 1
 
@@ -79,7 +78,6 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp = data[i]
-                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         error_items.append(AnalisisItem(temp, line, column_tk, "Caracter Desconocido"))
                         state = 0
                         column += 1
@@ -93,14 +91,12 @@ class Automata:
                         column += 1
                         state = 2
                         temp += data[i]
-                        print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_string"))
                         i += 1
                     
                     elif ord(data[i]) == 10:
                         ## ESTADO DE ERROR POR SALTO DE LÍNEA
                         errors = True
-                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         error_items.append(AnalisisItem(temp, line, column_tk, "Cadena no válida"))
                         state = 0
                         column = 1
@@ -142,7 +138,6 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         error_items.append(AnalisisItem(temp, line, column_tk, "Identificador no válido"))
                         state = 0
                         column += 1
@@ -152,7 +147,6 @@ class Automata:
                     else:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
-                        print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         if temp in palabras_reservadas:
                             accepted_items.append(AnalisisItem(temp, line, column_tk, "Palabra Reservada"))
                         else:
@@ -178,7 +172,6 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
                         state = 0
                         column += 1
@@ -188,7 +181,6 @@ class Automata:
                     else:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
-                        print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
 
                 elif state == 5:
@@ -205,7 +197,6 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
                         state = 0
                         column += 1
@@ -215,7 +206,6 @@ class Automata:
                     else:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
-                        print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
 
                 elif state == 6:
@@ -230,7 +220,6 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        print("ERROR: " + temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
                         state = 0
                         column += 1
@@ -240,7 +229,6 @@ class Automata:
                     else:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
-                        print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
             
             HelperReport().reporte_analisis_correcto(accepted_items)

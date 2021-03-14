@@ -63,16 +63,19 @@ class HelperOrden:
             i += 1
         return item_array
 
+
     def build_html(self, data_menu, data_orden):
         generated = False
-
+        id_missing = False
         m_name = data_menu.get_name()
         subtotal = Decimal()
         items = ''''''
         for item in data_orden.get_items():
+            id_missing = True
             for key, values in data_menu.get_items().items():
                 for value in values:
                     if item.get_item_id() == value.get_item_id():
+                        id_missing = False
                         subtotal += Decimal(item.get_quantity())*round(Decimal(value.get_price()), 2)
                         items += '''
                         <tr>
@@ -160,11 +163,15 @@ class HelperOrden:
                         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
                     </body>
                     </html>'''
-
-        file = open('factura.html', 'w')
-        file.write(html)
-        file.close()
-        filename = 'file://' + os.path.realpath(file.name)
-        webbrowser.open_new_tab(filename)
-        generated = True
-        return generated
+        if id_missing:
+            print("")
+            print("Uno o más ids no han sido encontrados")
+            return False
+        else:
+            file = open('factura.html', 'w')
+            file.write(html)
+            file.close()
+            filename = 'file://' + os.path.realpath(file.name)
+            webbrowser.open_new_tab(filename)
+            generated = True
+            return generated
