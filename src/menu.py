@@ -44,7 +44,10 @@ class Menu:
         elif option == "3":
             self.menu_options()
         elif option == "4":
-            Options().read_orden()
+            if ProyectoSingleton().menu is None:
+                print("Debes generar primero el menú para acceder a esta opción")
+            else:
+                Options().read_orden()
         elif option == "5":
             print("option 5")
         elif option == "6":
