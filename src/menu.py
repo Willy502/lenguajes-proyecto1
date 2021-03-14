@@ -4,13 +4,14 @@ from .proyecto_singleton import *
 class Menu:
 
     def __init__(self):
-        self.create_menu()
-
-    def create_menu(self):
+        print("")
         print("Proyecto 1 - LFP")
         print("Lenguajes formales y de programación A+")
         print("Wilfred Alejandro Barrios Ola")
         print("201602734")
+        self.create_menu()
+
+    def create_menu(self):
         print("")
         print("1. Cargar menú")
         print("2. Cargar orden")

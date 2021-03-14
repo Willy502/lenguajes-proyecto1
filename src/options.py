@@ -23,8 +23,8 @@ class Options:
 
     def read_menu(self):
         menu_file = ProyectoSingleton().menu_file
-        Automata().read_file(menu_file)
+        Automata().read_file(menu_file, "menu")
 
     def read_orden(self):
         orden_file = ProyectoSingleton().orden_file
-        Automata().read_file(orden_file)
+        Automata().read_file(orden_file, "orden")

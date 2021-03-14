@@ -2,20 +2,20 @@ import webbrowser
 import os
 from src.models.analisis_item import *
 
-class Helper:
+class HelperReport:
 
     def reporte_analisis_correcto(self, data):
         generated = False
         lines = ''
         contador = 1
         for item in data:
-            lines += "<tr>"
-            lines += "<th scope='row'>" + str(contador) + "</th>"
-            lines += "<td scope='col'>" + str(item.get_lexema()) + "</td>"
-            lines += "<td scope='col'>" + str(item.get_fila()) + "</td>"
-            lines += "<td scope='col'>" + str(item.get_columna()) + "</td>"
-            lines += "<td scope='col'>" + str(item.get_token()) + "</td>"
-            lines += "</tr>"
+            lines += "<tr>\n"
+            lines += "<th scope='row'>" + str(contador) + "</th>\n"
+            lines += "<td scope='col'>" + str(item.get_lexema()) + "</td>\n"
+            lines += "<td scope='col'>" + str(item.get_fila()) + "</td>\n"
+            lines += "<td scope='col'>" + str(item.get_columna()) + "</td>\n"
+            lines += "<td scope='col'>" + str(item.get_token()) + "</td>\n"
+            lines += "</tr>\n"
             contador += 1
             
 
@@ -74,13 +74,13 @@ class Helper:
         lines = ''
         contador = 1
         for item in data:
-            lines += "<tr>"
-            lines += "<th scope='row'>" + str(contador) + "</th>"
-            lines += "<td scope='col'>" + str(item.get_fila()) + "</td>"
-            lines += "<td scope='col'>" + str(item.get_columna()) + "</td>"
-            lines += "<td scope='col'>" + str(item.get_lexema()) + "</td>"
-            lines += "<td scope='col'>" + str(item.get_token()) + "</td>"
-            lines += "</tr>"
+            lines += "<tr>\n"
+            lines += "<th scope='row'>" + str(contador) + "</th>\n"
+            lines += "<td scope='col'>" + str(item.get_fila()) + "</td>\n"
+            lines += "<td scope='col'>" + str(item.get_columna()) + "</td>\n"
+            lines += "<td scope='col'>" + str(item.get_lexema()) + "</td>\n"
+            lines += "<td scope='col'>" + str(item.get_token()) + "</td>\n"
+            lines += "</tr>\n"
             contador += 1
             
 

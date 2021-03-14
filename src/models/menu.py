@@ -8,10 +8,8 @@ class Menu:
     def get_name(self):
         return self.__name
 
-    def set_item(self, item_name, item_options):
-        self.__items = {
-            item_name: item_options
-        }
+    def set_item(self, items):
+        self.__items = items
 
     def get_items(self):
         return self.__items

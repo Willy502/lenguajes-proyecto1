@@ -1,9 +1,10 @@
 from src.models.analisis_item import *
-from commons.helper import *
+from commons.helper_report import *
+from commons.helper_menu import *
 
 class Automata:
 
-    def read_file(self, file_to_read):
+    def read_file(self, file_to_read, type_file):
 
         palabras_reservadas = ['restaurante']
         charcodes_main = [91, 93, 58, 59, 61, 44, 37]
@@ -11,6 +12,7 @@ class Automata:
         accepted_items = []
         error_items = []
         errors = False
+        menu = Menu()
 
         with open(file_to_read, 'r') as file:
             data = file.read()
@@ -240,9 +242,14 @@ class Automata:
                         print(temp + " linea: " + str(line) + ", columna: " + str(column_tk))
                         accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
             
-            Helper().reporte_analisis_correcto(accepted_items)
+            HelperReport().reporte_analisis_correcto(accepted_items)
             if errors:
-                Helper().reporte_errores(error_items)
+                HelperReport().reporte_errores(error_items)
+            else:
+                if type_file == "menu":
+                    HelperMenu().analize_items(accepted_items)
+                else:
+                    print(type_file)
 
     def create_token(self, data):
 
