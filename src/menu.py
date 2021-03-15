@@ -1,5 +1,6 @@
 from .options import *
 from .proyecto_singleton import *
+from .graph import *
 
 class Menu:
 
@@ -34,23 +35,26 @@ class Menu:
             print("Para acceder a estas opciones primero debes cargar un archivo de orden\n")
             self.create_menu()
 
-        if option == "1":
+        if option == "1": ## Read Menu File
             open_file = Options().open_file(self, "menu")
-        elif option == "2":
+        elif option == "2": ## Read Order File
             if ProyectoSingleton().menu_file is None:
                 print("Para acceder a esta opcion primero debes cargar un archivo de menu\n")
             else:
                 open_file = Options().open_file(self, "orden")
-        elif option == "3":
+        elif option == "3": # Create Menu
             self.menu_options()
-        elif option == "4":
+        elif option == "4": # Create Bill
             if ProyectoSingleton().menu is None:
                 print("Debes generar primero el menú para acceder a esta opción")
             else:
                 Options().read_orden()
-        elif option == "5":
-            print("option 5")
-        elif option == "6":
+        elif option == "5": # Generate Graph
+            if ProyectoSingleton().menu is None:
+                print("Debes generar primero el menú para acceder a esta opción")
+            else:
+                Graph()
+        elif option == "6": # Exit
             quit()
         else:
             print("Selecciona una opción válida\n")
