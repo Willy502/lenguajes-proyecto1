@@ -21,7 +21,6 @@ class Automata:
             state = 0
             line = 1
             column = 1
-            column_tk = 1
             temp = ""
             i = 0
 
@@ -34,26 +33,22 @@ class Automata:
                     if ord(data[i]) == 10:
                         line += 1 ## NUEVA LÍNEA
                         column = 1 ## REINICIAMOS LA COLUMNA
-                        column_tk = 1
                         i += 1
 
                     elif ord(data[i]) in charcodes_main:
-                        column += 1
-                        column_tk = column - 1
                         temp = data[i]
-                        accepted_items.append(AnalisisItem(temp, line, column_tk, self.create_token(data[i])))
+                        accepted_items.append(AnalisisItem(temp, line, column, self.create_token(data[i])))
+                        column += 1
                         i += 1
 
                     elif ord(data[i]) == 32:
                         ## WHITESPACE
                         column += 1
-                        column_tk = column - 1
                         i += 1
 
                     elif ord(data[i]) == 39:
                         ## '
                         column += 1
-                        column_tk = column - 1
                         state = 1
                         temp = data[i]
                         i += 1
@@ -61,7 +56,6 @@ class Automata:
                     elif (ord(data[i]) >= 97 and ord(data[i]) <= 122) or ord(data[i]) == 241:
                         ## a-z ñ INCLUÍDO
                         column += 1
-                        column_tk = column - 1
                         state = 3
                         temp = data[i]
                         i += 1
@@ -69,7 +63,6 @@ class Automata:
                     elif ord(data[i]) >= 48 and ord(data[i]) <= 57:
                         ## 0-9
                         column += 1
-                        column_tk = column - 1
                         state = 4
                         temp = data[i]
                         i += 1
@@ -78,7 +71,7 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp = data[i]
-                        error_items.append(AnalisisItem(temp, line, column_tk, "Caracter Desconocido"))
+                        error_items.append(AnalisisItem(temp, line, column, "Caracter Desconocido"))
                         state = 0
                         column += 1
                         i += 1
@@ -88,16 +81,15 @@ class Automata:
 
                     if ord(data[i]) == 39:
                         ## '
+                        temp += data[i]
                         column += 1
                         state = 2
-                        temp += data[i]
-                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_string"))
                         i += 1
                     
                     elif ord(data[i]) == 10:
                         ## ESTADO DE ERROR POR SALTO DE LÍNEA
+                        error_items.append(AnalisisItem(temp, line, column - len(temp), "Cadena no válida"))
                         errors = True
-                        error_items.append(AnalisisItem(temp, line, column_tk, "Cadena no válida"))
                         state = 0
                         column = 1
                         line += 1
@@ -111,6 +103,7 @@ class Automata:
 
                 elif state == 2:
                     ## ESTADO DE ACEPTACIÓN DE LA CADENA
+                    accepted_items.append(AnalisisItem(temp, line, column - len(temp), "tk_string"))
                     state = 0
 
                 elif state == 3:
@@ -138,19 +131,18 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        error_items.append(AnalisisItem(temp, line, column_tk, "Identificador no válido"))
+                        error_items.append(AnalisisItem(temp, line, column - len(temp), "Identificador no válido"))
                         state = 0
                         column += 1
-                        column_tk = column
                         i += 1
 
                     else:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
                         if temp in palabras_reservadas:
-                            accepted_items.append(AnalisisItem(temp, line, column_tk, "Palabra Reservada"))
+                            accepted_items.append(AnalisisItem(temp, line, column - len(temp), "Palabra Reservada"))
                         else:
-                            accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_id"))
+                            accepted_items.append(AnalisisItem(temp, line, column - len(temp), "tk_id"))
 
                 elif state == 4:
                     ## DIGITO
@@ -172,16 +164,15 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
+                        error_items.append(AnalisisItem(temp, line, column - len(temp), "Dígito no válido"))
                         state = 0
                         column += 1
-                        column_tk = column
                         i += 1
 
                     else:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
-                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
+                        accepted_items.append(AnalisisItem(temp, line, column - len(temp), "tk_num"))
 
                 elif state == 5:
                     ## .
@@ -196,16 +187,15 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
+                        error_items.append(AnalisisItem(temp, line, column - len(temp), "Dígito no válido"))
                         state = 0
                         column += 1
-                        column_tk = column
                         i += 1
 
                     else:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
-                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
+                        accepted_items.append(AnalisisItem(temp, line, column - len(temp), "tk_num"))
             
             HelperReport().reporte_analisis_correcto(accepted_items)
             if errors:
