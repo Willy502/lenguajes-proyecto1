@@ -189,30 +189,6 @@ class Automata:
                     if ord(data[i]) >= 48 and ord(data[i]) <= 57:
                         ## DIGITO
                         column += 1
-                        state = 6
-                        temp += data[i]
-                        i += 1
-
-                    elif ord(data[i]) not in charcodes_continue:
-                        ## ESTADO DE ERROR
-                        errors = True
-                        temp += data[i]
-                        error_items.append(AnalisisItem(temp, line, column_tk, "Dígito no válido"))
-                        state = 0
-                        column += 1
-                        column_tk = column
-                        i += 1
-
-                    else:
-                        ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
-                        state = 0
-                        accepted_items.append(AnalisisItem(temp, line, column_tk, "tk_num"))
-
-                elif state == 6:
-
-                    if ord(data[i]) >= 48 and ord(data[i]) <= 57:
-                        ## DIGITO
-                        column += 1
                         temp += data[i]
                         i += 1
 
