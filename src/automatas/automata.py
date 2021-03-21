@@ -7,10 +7,10 @@ from src.proyecto_singleton import *
 class Automata:
 
     def read_file(self, file_to_read, type_file, maxim):
-
         palabras_reservadas = ['restaurante']
         charcodes_main = [91, 93, 58, 59, 61, 44, 37]
         charcodes_continue = [39, 91, 93, 58, 59, 61, 44, 37, 10, 32]
+        message_to_report = ""
         accepted_items = []
         error_items = []
         errors = False
@@ -132,8 +132,8 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        error_items.append(AnalisisItem(temp, line, column - len(temp), "Identificador no válido"))
-                        state = 0
+                        message_to_report = "Identificador no válido"
+                        state = 6
                         column += 1
                         i += 1
 
@@ -165,8 +165,8 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        error_items.append(AnalisisItem(temp, line, column - len(temp), "Dígito no válido"))
-                        state = 0
+                        message_to_report = "Dígito no válido"
+                        state = 6
                         column += 1
                         i += 1
 
@@ -188,8 +188,8 @@ class Automata:
                         ## ESTADO DE ERROR
                         errors = True
                         temp += data[i]
-                        error_items.append(AnalisisItem(temp, line, column - len(temp), "Dígito no válido"))
-                        state = 0
+                        message_to_report = "Dígito no válido"
+                        state = 6
                         column += 1
                         i += 1
 
@@ -197,6 +197,15 @@ class Automata:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
                         accepted_items.append(AnalisisItem(temp, line, column - len(temp), "tk_num"))
+
+                elif state == 6:
+                    if ord(data[i]) not in charcodes_continue:
+                        temp += data[i]
+                        i += 1
+                        column += 1
+                    else:
+                        state = 0
+                        error_items.append(AnalisisItem(temp, line, column - len(temp), message_to_report))
             
             HelperReport().reporte_analisis_correcto(accepted_items)
             if errors:
