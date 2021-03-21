@@ -6,10 +6,10 @@ from decimal import Decimal
 
 class Graph:
 
-    def __init__(self):
-        self.generate_graph()
+    def __init__(self, max_quantity):
+        self.generate_graph(max_quantity)
 
-    def generate_graph(self):
+    def generate_graph(self, max_quantity):
         generated_menu = ProyectoSingleton().menu
         dot = Digraph(comment='Árbol de menú')
 
@@ -19,8 +19,9 @@ class Graph:
             dot.edge('A', key.strip("'"))
 
             for value in values:
+                if max_quantity != -1 and round(Decimal(value.get_price()), 2) > round(Decimal(max_quantity), 2):
+                    continue
                 description = value.get_name().strip("'") + " Q" + str(round(Decimal(value.get_price()), 2)) + "\n" + value.get_description().strip("'")
-
                 dot.node(value.get_item_id(), description)
                 dot.edge(key.strip("'"), value.get_item_id())
 

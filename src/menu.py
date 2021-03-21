@@ -4,6 +4,8 @@ from .graph import *
 
 class Menu:
 
+    max_quantity = -1
+
     def __init__(self):
         print("")
         print("Proyecto 1 - LFP")
@@ -57,7 +59,7 @@ class Menu:
             if ProyectoSingleton().menu is None:
                 print("Debes generar primero el menú para acceder a esta opción")
             else:
-                Graph()
+                Graph(self.max_quantity)
         elif option == "6": # Exit
             quit()
         else:
@@ -73,10 +75,12 @@ class Menu:
             print("> ", end='')
             answer2 = input()
             if answer2.isnumeric():
-                Options().read_menu(answer2)
+                self.max_quantity = answer2
+                Options().read_menu(self.max_quantity)
             else:
                 self.menu_options()
         elif answer.upper() == "NO":
-            Options().read_menu(-1)
+            self.max_quantity = -1
+            Options().read_menu(self.max_quantity)
         else:
             self.menu_options()
