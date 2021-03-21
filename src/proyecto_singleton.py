@@ -4,6 +4,7 @@ class ProyectoSingleton(object):
     menu_file = None
     orden_file = None
     menu = None
+    menu_failed = False
 
     def __new__(cls):
         if ProyectoSingleton.__instance is None:

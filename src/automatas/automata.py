@@ -2,6 +2,7 @@ from src.models.analisis_item import *
 from commons.helper_report import *
 from commons.helper_menu import *
 from commons.helper_orden import *
+from src.proyecto_singleton import *
 
 class Automata:
 
@@ -140,7 +141,7 @@ class Automata:
                         ## CAMBIO DE ESTADO POR DELIMITADOR ACEPTADO
                         state = 0
                         if temp in palabras_reservadas:
-                            accepted_items.append(AnalisisItem(temp, line, column - len(temp), "Palabra Reservada"))
+                            accepted_items.append(AnalisisItem(temp, line, column - len(temp), "tk_restaurant"))
                         else:
                             accepted_items.append(AnalisisItem(temp, line, column - len(temp), "tk_id"))
 
@@ -200,8 +201,11 @@ class Automata:
             HelperReport().reporte_analisis_correcto(accepted_items)
             if errors:
                 HelperReport().reporte_errores(error_items)
+                if type_file == "menu":
+                    ProyectoSingleton().menu_failed = True
             else:
                 if type_file == "menu":
+                    ProyectoSingleton().menu_failed = False
                     HelperMenu().analize_items(accepted_items, maxim)
                 else:
                     HelperOrden().analize_items(accepted_items)

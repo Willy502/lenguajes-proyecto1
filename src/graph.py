@@ -25,3 +25,4 @@ class Graph:
                 dot.edge(key.strip("'"), value.get_item_id())
 
         dot.render('test-output/arbol.gv', view=True)
+        print("Árbol generado exitosamente")

@@ -45,10 +45,14 @@ class Menu:
         elif option == "3": # Create Menu
             self.menu_options()
         elif option == "4": # Create Bill
-            if ProyectoSingleton().menu is None:
-                print("Debes generar primero el menú para acceder a esta opción")
+            if ProyectoSingleton().menu_failed != True:
+                if ProyectoSingleton().menu is None:
+                    print("Debes generar primero el menú para acceder a esta opción")
+                else:
+                    Options().read_orden()
             else:
-                Options().read_orden()
+                print("El menú presenta errores, por lo tanto no se puede generar una orden")
+                
         elif option == "5": # Generate Graph
             if ProyectoSingleton().menu is None:
                 print("Debes generar primero el menú para acceder a esta opción")

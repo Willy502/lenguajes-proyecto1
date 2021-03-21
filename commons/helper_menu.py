@@ -22,7 +22,7 @@ class HelperMenu:
             item = items[i]
             
             try:
-                if item.get_token() == "Palabra Reservada":
+                if item.get_token() == "tk_restaurant":
                     if items[i + 1].get_token() == "tk_asign":
                         if items[i + 2].get_token() == "tk_string":
                             menu_name = items[i + 2].get_lexema()
